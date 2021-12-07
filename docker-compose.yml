@@ -4,25 +4,23 @@ services:
   front:
     container_name: frontend
     image: jtqfront
-    build: ./angular
-    ports: 
-      - "80:80"
+    build: angular/
     networks: 
       - local_test
+
   back:
     container_name: backend
     image: jtqnuevo
-    build: ./java
-    ports: 
-      - "8081:8081"
+    build: java/
     networks: 
       - local_test
+
   reverseproxy:
     container_name: reverse_proxy
     image: reverseproxy
-    build: ./nginx
+    build: nginx/
     ports:
-      - 8080:8080
+      - 80:80
     links: 
       - front
       - back
