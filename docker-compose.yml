@@ -1,0 +1,37 @@
+version: "3.9"
+
+services: 
+  front:
+    container_name: frontend
+    image: jtqfront
+    build: ./angular
+    ports: 
+      - "80:80"
+    networks: 
+      - local_test
+  back:
+    container_name: backend
+    image: jtqnuevo
+    build: ./java
+    ports: 
+      - "8081:8081"
+    networks: 
+      - local_test
+  reverseproxy:
+    container_name: reverse_proxy
+    image: reverseproxy
+    build: ./nginx
+    ports:
+      - 8080:8080
+    links: 
+      - front
+      - back
+    networks: 
+      - local_test
+networks:
+  local_test: 
+    driver: bridge
+  
+    
+      
+    
