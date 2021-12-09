@@ -7,14 +7,12 @@ services:
     build: angular/
     networks: 
       - local_test
-
   back:
     container_name: backend
     image: jtqnuevo
     build: java/
     networks: 
       - local_test
-
   reverseproxy:
     container_name: reverse_proxy
     image: reverseproxy
