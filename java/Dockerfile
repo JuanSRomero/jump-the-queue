@@ -6,7 +6,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY jtqj/ /app
-
+#creamos el .jar
 RUN mvn clean install
 
 #Stage 2 Deploy
