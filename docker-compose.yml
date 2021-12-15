@@ -24,6 +24,7 @@ services:
       - back
     networks: 
       - local_test
+#docker-compose usa una network default, pero mejor hacerla
 networks:
   local_test: 
     driver: bridge
