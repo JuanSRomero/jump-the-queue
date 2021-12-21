@@ -12,7 +12,10 @@ pipeline {
     stages {        
         stage('Build frontend') {
             steps {
-                echo 'Building frontend'
+                dir(ang_dir){
+                    sh 'yarn install'
+                    sh 'yarn build --prod'
+                }
             }
         }
         stage('Build backend') {
