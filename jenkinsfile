@@ -8,6 +8,7 @@ pipeline {
     }
     tools{
         maven 'mvn'
+        nodejs 'NodeJs'
     }
     stages {        
         stage('Build frontend') {
