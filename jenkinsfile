@@ -21,9 +21,13 @@ pipeline {
         }
         stage('Build backend') {
             steps {
-                script {
-                  gv.buildBack()
-              }
+                dir(java_dir){
+                    withMaven(maven: mvn){
+                        sh "mvn clean test"
+                    }
+                }
+            }
+        }
                 
             }
         }
