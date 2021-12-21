@@ -21,7 +21,7 @@ pipeline {
                     sh 'mvn clean build'
                     }
                 }
-            }
+            
         }
         stage('Test backend') {
             steps {
@@ -30,5 +30,6 @@ pipeline {
                 }
             }
         }
-        
     }
+        
+}
