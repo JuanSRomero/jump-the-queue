@@ -1,10 +1,30 @@
+def gv
 pipeline {
     agent any
-
+    
+    environment {
+        ang_dir = 'angular'
+        java_dir = 'java/jtqj'
+    }
     stages {
-        stage('Build') {
+        stage('init') {
+          steps {
+              script {
+                  gv = load "script.groovy"
+              }
+          }
+      }
+        stage('Build frontend') {
             steps {
-                echo 'Building..'
+                echo 'Building frontend'
+            }
+        }
+        stage('Build backend') {
+            steps {
+                script {
+                  gv.buildBack()
+              }
+                
             }
         }
         stage('Test') {
@@ -14,7 +34,10 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                script{
+                    gv.deployApp()
+                }
+                
             }
         }
     }
