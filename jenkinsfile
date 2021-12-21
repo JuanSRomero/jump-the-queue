@@ -13,7 +13,7 @@ pipeline {
                   gv = load "script.groovy"
               }
           }
-      }
+        }
         stage('Build frontend') {
             steps {
                 echo 'Building frontend'
@@ -28,9 +28,7 @@ pipeline {
                 }
             }
         }
-                
-            }
-        }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
@@ -38,10 +36,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script{
-                    gv.deployApp()
-                }
-                
+                sh "docker-compose build"
+                sh "docker-compose up -d"
             }
         }
     }
