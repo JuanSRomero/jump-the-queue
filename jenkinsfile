@@ -23,7 +23,10 @@ pipeline {
         stage('Test frontend') {
             steps {
                 dir(ang_dir){
-                    echo 'Testing front ... .'
+                    sh 'npm install -g @angular/cli'
+                    sh 'ng serve'
+                    sh 'ng test'
+                    sh 'ng lint'
                 }
             }
         }
