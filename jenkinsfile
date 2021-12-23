@@ -19,6 +19,13 @@ pipeline {
                 }
             }
         }
+        stage('Test frontend') {
+            steps {
+                dir(ang_dir){
+                    echo 'Testing front ...'
+                }
+            }
+        }
         stage('Build backend') {
             steps {
                 dir(java_dir){
