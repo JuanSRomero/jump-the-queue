@@ -23,7 +23,7 @@ pipeline {
         stage('Test frontend') {
             steps {
                 dir(ang_dir){
-                    echo 'Testing front ...'
+                    echo 'Testing front ... .'
                 }
             }
         }
