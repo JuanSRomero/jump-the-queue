@@ -24,7 +24,6 @@ pipeline {
             steps {
                 dir(ang_dir){
                     sh 'npm install -g @angular/cli'
-                    sh 'ng serve'
                     sh 'ng test'
                     sh 'ng lint'
                 }
