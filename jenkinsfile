@@ -28,7 +28,7 @@ pipeline {
                 }
             }
         }
-        stage('Build  backend') {
+        stage('Build backend') {
             steps {
                 dir(java_dir){
                     sh 'mvn clean install'
