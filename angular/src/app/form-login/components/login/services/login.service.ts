@@ -27,7 +27,7 @@ export class LoginService {
 
   authenticate(username: string, password: string): Observable<any> {
     let options: any;
-
+    /*
     // CSRF
     if (environment.security === 'csrf') {
       options = {
@@ -41,7 +41,7 @@ export class LoginService {
     if (environment.security === 'jwt') {
       options = { observe: 'response' };
     }
-
+    */
     return this.http.post(
       `${this.baseUrl}` + '/login',
       {
@@ -60,6 +60,7 @@ export class LoginService {
     this.authenticate(username, password).subscribe(
       (res) => {
         // CSRF
+        /*
         if (environment.security === 'csrf') {
           this.getCsrf().subscribe((data: any) => {
             this.authService.setToken(data.token);
@@ -71,7 +72,7 @@ export class LoginService {
         if (environment.security === 'jwt') {
           this.authService.setToken(res.headers.get('Authorization'));
           this.checkInUser(res, username);
-        }
+        }*/
       },
       (err: any) => {
         this.snackBar.open('access error', 'OK', {

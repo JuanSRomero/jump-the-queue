@@ -22,7 +22,7 @@ export class HttpRequestInterceptorService implements HttpInterceptor {
     const authHeader: string = this.auth.getToken();
     if (authHeader) {
       let authReq: HttpRequest<any>;
-
+      /*
       // CSRF
       if (environment.security === 'csrf') {
         authReq = req.clone({
@@ -38,7 +38,7 @@ export class HttpRequestInterceptorService implements HttpInterceptor {
         });
       }
 
-      return next.handle(authReq);
+      return next.handle(authReq);*/
     } else {
       return next.handle(req);
     }
