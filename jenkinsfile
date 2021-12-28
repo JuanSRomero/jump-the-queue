@@ -11,7 +11,7 @@ pipeline {
         nodejs 'NodeJs'
     }
     stages {        
-        stage('Build frontend') {
+        stage('Build  frontend') {
             steps {
                 dir(ang_dir){
                     sh 'yarn --network-timeout 100000'
@@ -50,8 +50,8 @@ pipeline {
             def mvn = tool 'mvn';
             withSonarQubeEnv() {
             sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=jtq"
-    }
-  }
+            }
+        }
         stage ('Deploy') {
             steps {
                 sh "docker-compose -f docker-compose.yml build"
