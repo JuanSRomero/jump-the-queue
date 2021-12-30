@@ -11,3 +11,22 @@ Fichero de texto para poder realizar commit sin tener que hacer cambios reales e
 9. ""
 10. ""
 11. ""
+#remote_host:
+    #container_name: remote_host
+    #image: remote_host
+    #build: 
+      #context: centos7
+    #networks:
+      #- net
+  #git:
+    #container_name: git
+    #image: 'gitlab/gitlab-ee:latest'
+    #hostname: 'gitlab.example.com'
+    #ports:
+      #- '8090:80'
+    #volumes:
+      #- '/srv/config:/etc/gitlab'
+      #- '/srv/logs:/var/log/gitlab'
+      #- '/srv/data:/var/opt/gitlab'
+    #networks:
+      #- net
