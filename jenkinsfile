@@ -15,11 +15,17 @@ pipeline {
     }
     stages {        
         //separar install y build 
-        stage('Build frontend') {
+        stage('Install dependencies') {
             steps {
                 dir(ang_dir){
                     //sh 'yarn --network-timeout 100000'
                     sh 'npm install'
+                }
+            }
+        }
+        stage('Build frontend') {
+            steps {
+                dir(ang_dir){
                     sh 'npm run build'
                 }
             }
