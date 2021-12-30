@@ -5,7 +5,9 @@ pipeline {
     environment {
         ang_dir = 'angular'
         java_dir = 'java/jtqj'
+        src_dir = 'angular/src'
         sonarEnv = "SonarQube"
+        scannerHome = "SonarQubeScanner"
     }
     tools{
         maven 'mvn'
@@ -24,15 +26,32 @@ pipeline {
         stage('Test front') {
             steps {
                 dir(ang_dir){
-                    sh 'ng test'
+                    sh 'ng test --code-coverage' 
                     sh 'ng lint'
                 }
             }
         }
         stage('SonarQube Analysis Front') {
             steps{
-                withSonarQubeEnv(sonarEnv) {
-                    sh "mvn/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=jtq"
+                script {
+                    dir(ang_dir) {
+                        def props = readJSON file: 'package.json'
+                        withSonarQubeEnv(sonarEnv) {
+                            sh """
+                                ${scannerHome}/bin/sonnar-scanner \
+                                    -Dsonar.projectKey=${props.name} \
+                                    -Dsonar.projectName=${props.name} \
+                                    -Dsonar.projectVersion=${props.version} \
+                                    -Dsonar.sources=${src_dir}
+                            """
+                        }
+                        timeout(time: 1, unit: 'HOURS') {
+                            def qg = waitForQualityGate() 
+                            if (qg.status != 'OK') {
+                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -51,8 +70,6 @@ pipeline {
                 }
             }
         }   
-        //sonar para front y para back, empezar con el de back
-        //front mythaistar (un poco) 
 
         stage('SonarQube Analysis Back') {
             steps{
@@ -68,6 +85,7 @@ pipeline {
                     if (qg.status != 'OK') {
                         error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     }
+                }
             }
         }
         stage ('Deploy') {
@@ -78,5 +96,6 @@ pipeline {
             }
         }
     }
+    
         
 }
