@@ -92,7 +92,7 @@ pipeline {
             steps {
                 //revisar tool jenkins docker
                 //mejor imagenes con el Docker build
-                
+                sh 'echo Hola'
             }
         }
     }
