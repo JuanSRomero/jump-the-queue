@@ -14,12 +14,13 @@ pipeline {
         nodejs 'NodeJs'
     }
     stages {        
-        stage('Build  frontend') {
+        //separar install y build 
+        stage('Build frontend') {
             steps {
                 dir(ang_dir){
-                    sh 'yarn --network-timeout 100000'
-                    sh 'yarn install'
-                    sh 'yarn build --configuration production'
+                    //sh 'yarn --network-timeout 100000'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }
@@ -45,12 +46,6 @@ pipeline {
                                     -Dsonar.sources=${src_dir}
                             """
                         }
-                        timeout(time: 1, unit: 'HOURS') {
-                            def qg = waitForQualityGate() 
-                            if (qg.status != 'OK') {
-                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                            }
-                        }
                     }
                 }
             }
@@ -66,7 +61,7 @@ pipeline {
         stage('Test backend') {
             steps {
                 dir(java_dir){
-                    sh 'mvn clean test'
+                    sh 'mvn clean package'
                 }
             }
         }   
@@ -77,12 +72,6 @@ pipeline {
                     dir(java_dir){
                         withSonarQubeEnv(sonarEnv) {
                             sh "mvn sonar:sonar -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
-                        }
-                        timeout(time: 1, unit: 'HOURS') {
-                            def qg = waitForQualityGate() 
-                            if (qg.status != 'OK') {
-                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                            }
                         }
                     }
                 }
