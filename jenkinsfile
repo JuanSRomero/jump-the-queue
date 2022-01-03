@@ -6,7 +6,7 @@ pipeline {
         ang_dir = 'angular'
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
-        sonarEnv = "SonarQube"
+        sonarEnv = "sonarqube"
         scannerHome = "SonarQubeScanner"
     }
     tools{
