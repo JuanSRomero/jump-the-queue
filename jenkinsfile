@@ -40,7 +40,7 @@ pipeline {
                         
                         withSonarQubeEnv(sonarEnv) {
                             sh """
-                                ${scannerHome}/bin/sonar \
+                                ${scannerHome}/bin/sonar.sh \
                                     -Dsonar.projectKey=jtqangular \
                                     -Dsonar.projectName=jtqangular \
                                     -Dsonar.sources=${src_dir}
