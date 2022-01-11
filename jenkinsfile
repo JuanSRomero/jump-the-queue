@@ -40,9 +40,9 @@ pipeline {
                         
                         withSonarQubeEnv(sonarEnv) {
                             sh """
-                                ${scannerHome}/bin/sonar.sh \
-                                    -Dsonar.projectKey=jtqangular \
-                                    -Dsonar.projectName=jtqangular \
+                                ${scannerHome}/bin/sonnar-scanner \
+                                    -Dsonar.projectKey=jtq_angular \
+                                    -Dsonar.projectName=jtq_angular \
                                     -Dsonar.sources=${src_dir}
                             """
                         }
@@ -81,7 +81,10 @@ pipeline {
                 script{
                     dir(java_dir){
                         withSonarQubeEnv(sonarEnv) {
-                            sh "mvn sonar:sonar -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
+                            sh "mvn sonar:sonar -Dsonar.projectKey=jtq_java \
+                                    -Dsonar.projectName=jtq_java \
+                                    -Dsonar.sources=${java_dir}
+                                    -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
                     }
                 }
