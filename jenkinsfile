@@ -7,10 +7,12 @@ pipeline {
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
         sonarEnv = "sonarqube"
+        
     }
     tools{
         maven 'mvn'
         nodejs 'NodeJs'
+        scannerHome 'SonarQube scanner'
     }
     stages {        
         //separar install y build 
@@ -33,7 +35,6 @@ pipeline {
         }
         */
         stage('SonarQube Analysis Front') {
-            def scannerHome = tool 'SonarQube scanner';
             steps{
                 script {
                     dir(ang_dir) {
