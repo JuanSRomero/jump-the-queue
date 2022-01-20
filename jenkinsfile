@@ -6,13 +6,13 @@ pipeline {
         ang_dir = 'angular'
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
-        sonarEnv = "sonarqube"
+        sonarEnv = 'sonarqube'
+        scannerHome = 'SonarQube scanner'
         
     }
     tools{
         maven 'mvn'
         nodejs 'NodeJs'
-        scannerHome 'SonarQube scanner'
     }
     stages {        
         //separar install y build 
