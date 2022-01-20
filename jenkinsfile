@@ -7,7 +7,6 @@ pipeline {
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
         sonarEnv = "sonarqube"
-        scannerHome = "sonarqube"
     }
     tools{
         maven 'mvn'
@@ -34,6 +33,7 @@ pipeline {
         }
         */
         stage('SonarQube Analysis Front') {
+            def scannerHome = tool 'SonarQube scanner';
             steps{
                 script {
                     dir(ang_dir) {
@@ -41,6 +41,7 @@ pipeline {
                         withSonarQubeEnv(sonarEnv) {
                             sh """
                                 ${scannerHome}/bin/sonnar-scanner \
+                                    -Dsonar.host.url=http://localhost:9000/ \
                                     -Dsonar.projectKey=jtq_angular \
                                     -Dsonar.projectName=jtq_angular \
                                     -Dsonar.sources=${src_dir}
