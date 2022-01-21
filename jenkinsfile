@@ -34,6 +34,7 @@ pipeline {
             }
         }
         */
+        /*
         stage('SonarQube Analysis Front') {
             steps{
                 script {
@@ -52,7 +53,7 @@ pipeline {
                 }
             }
         }
-        
+        */
         /*
         stage('Build frontend') {
             steps {
@@ -92,15 +93,30 @@ pipeline {
                 }
             }
         }
-        /*
-        stage ('Deploy') {
+        stage('Build image frontend') {
             steps {
-                //revisar tool jenkins docker
-                //mejor imagenes con el Docker build
-                sh 'echo Hola'
+                script {
+                    def frontImage = docker.build("frontend:${env.BUILD_ID}", "-f ${dockerfile} ./java")
+                    frontImage.push()
+                }
             }
         }
-        */
+        stage('Build image backend') {
+            steps {
+                script {
+                    def backImage = docker.build("backend:${env.BUILD_ID}", "-f ${dockerfile} ./angular")
+                    backIMage.push()
+                }
+            }
+        }
+        stage('Build image reverse_proxy') {
+            steps {
+                script {
+                    def reverseImage = docker.build("reverseImage:${env.BUILD_ID}", "-f ${dockerfile} ./nginx")
+                    reverseImage.push()
+                }
+            }
+        }
     }
     
         
