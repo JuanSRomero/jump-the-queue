@@ -15,7 +15,6 @@ pipeline {
         nodejs 'NodeJs'
     }
     stages {        
-        //separar install y build 
         stage('Install dependencies') {
             steps {
                 dir(ang_dir){
