@@ -7,8 +7,6 @@ services:
     image: jenkins/jenkins 
     ports:
       - "8080:8080"
-    volumes:
-      - "./jenkins_home:/var/jenkins_home"
     networks:
       - sonarnet
 
@@ -66,5 +64,4 @@ volumes:
   sonarqube_bundled-plugins:
   postgresql:
   postgresql_data:
-  jenkins_home:
   nexus-data:
