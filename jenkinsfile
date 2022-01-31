@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-        
+        /*
         stage('SonarQube Analysis Front') {
             steps{
                 script {
@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-        
+        */
         /*
         stage('Build frontend') {
             steps {
