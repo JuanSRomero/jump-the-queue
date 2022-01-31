@@ -32,7 +32,7 @@ pipeline {
                         withSonarQubeEnv(sonarEnv) {
                             sh """
                                 ${scannerHome}/bin/sonnar-scanner -x \
-                                    -Dsonar.host.url=http://127.0.0.1:9000/ \
+                                    -Dsonar.host.url=http://172.18.0.5:9000/ \
                                     -Dsonar.projectKey=jtq_angular \
                                     -Dsonar.projectName=jtq_angular \
                                     -Dsonar.sources=${src_dir}
