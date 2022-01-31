@@ -6,12 +6,13 @@ pipeline {
         ang_dir = 'angular'
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
-        sonarEnv = 'sonarqube'     
+        sonarEnv = 'sonarqube' 
+        sonarTool = 'Sonarqube Scanner'    
     }
     tools {
         maven 'mvn'
         nodejs 'NodeJs'
-    }    //sonar-scanner 'SonarQube scanner'
+    }    
     
     stages {        
         stage('Install dependencies') {
@@ -27,7 +28,7 @@ pipeline {
             steps{
                 script {
                     dir(ang_dir) {
-                        
+                        def scannerHome = tool sonarTool
                         withSonarQubeEnv(sonarEnv) {
                             sh """
                                 ${scannerHome}/bin/sonnar-scanner -x \
