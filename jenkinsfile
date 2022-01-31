@@ -7,12 +7,12 @@ pipeline {
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
         sonarEnv = 'sonarqube'
-        scannerHome = 'SonarQube scanner'
         
     }
     tools{
         maven 'mvn'
         nodejs 'NodeJs'
+        SonarQube scanner 'SonarQube scanner'
     }
     stages {        
         stage('Install dependencies') {
@@ -23,17 +23,7 @@ pipeline {
                 }
             }
         }
-        /*
-        stage('Test front') {
-            steps {
-                dir(ang_dir){
-                    sh 'ng test --code-coverage' 
-                    sh 'ng lint'
-                }
-            }
-        }
-        */
-        /*
+        
         stage('SonarQube Analysis Front') {
             steps{
                 script {
@@ -41,7 +31,7 @@ pipeline {
                         
                         withSonarQubeEnv(sonarEnv) {
                             sh """
-                                ${scannerHome}/bin/sonnar-scanner \
+                                ${scannerHome}/bin/sonnar-scanner -x \
                                     -Dsonar.host.url=http://127.0.0.1:9000/ \
                                     -Dsonar.projectKey=jtq_angular \
                                     -Dsonar.projectName=jtq_angular \
@@ -52,7 +42,7 @@ pipeline {
                 }
             }
         }
-        */
+        
         /*
         stage('Build frontend') {
             steps {
@@ -62,6 +52,11 @@ pipeline {
             }
         }
         */
+        stage('get ip sonarqube'){
+            steps {
+                sh 'docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sonarqube'
+            }
+        }
         stage('Build backend') {
             steps {
                 dir(java_dir){
