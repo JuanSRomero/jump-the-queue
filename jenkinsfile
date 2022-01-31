@@ -7,7 +7,7 @@ pipeline {
         java_dir = 'java/jtqj'
         src_dir = 'angular/src'
         sonarEnv = 'sonarqube' 
-        sonarTool = 'SonarQube scanner'    
+        sonarTool = 'sonarqube'    
     }
     tools {
         maven 'mvn'
@@ -49,13 +49,6 @@ pipeline {
                 dir(ang_dir){
                     sh 'npm run build'
                 }
-            }
-        }
-        */
-        /*
-        stage('get ip sonarqube'){
-            steps {
-                sh 'docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sonarqube'
             }
         }
         */
