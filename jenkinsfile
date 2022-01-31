@@ -11,7 +11,7 @@ pipeline {
     tools {
         maven 'mvn'
         nodejs 'NodeJs'
-        SonarQube scanner 'SonarQube scanner'
+        sonar-scanner 'SonarQube scanner'
     }
     stages {        
         stage('Install dependencies') {
