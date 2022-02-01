@@ -41,6 +41,23 @@ pipeline {
                     }
                 }
             }
+            steps {
+                script {
+                    dir(ang_dir) {
+                        def scannerHome = tool sonarTool
+                        def props = readJSON file: 'package.json'
+                        withSonarQubeEnv(sonarEnv) {
+                            sh """
+                                ${scannerHome}/bin/sonar-scanner -X \
+                                    -Dsonar.projectKey=${props.name} \
+                                    -Dsonar.projectName=${props.name} \
+                                    -Dsonar.projectVersion=${props.version} \
+                                    -Dsonar.sources=${src_dir}
+                            """
+                        }
+                    }
+                }
+            }
         }
         
         /*
