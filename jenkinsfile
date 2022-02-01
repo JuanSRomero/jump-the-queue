@@ -5,7 +5,8 @@ pipeline {
     environment {
         ang_dir = 'angular'
         java_dir = 'java/jtqj'
-        src_dir = 'angular/src'
+        src_dir = 'src'
+
         sonarEnv = 'sonarqube' 
         sonarTool = 'sonarqube'    
     }
@@ -23,7 +24,7 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('SonarQube Analysis Front') {
             steps{
                 script {
@@ -31,8 +32,7 @@ pipeline {
                         def scannerHome = tool sonarTool
                         withSonarQubeEnv(sonarEnv) {
                             sh """
-                                ${scannerHome}/bin/sonnar-scanner -x \
-                                    -Dsonar.host.url=http://172.18.0.5:9000/ \
+                                ${scannerHome}/bin/sonnar-scanner -X \
                                     -Dsonar.projectKey=jtq_angular \
                                     -Dsonar.projectName=jtq_angular \
                                     -Dsonar.sources=${src_dir}
@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-        */
+        
         /*
         stage('Build frontend') {
             steps {
@@ -76,7 +76,7 @@ pipeline {
                         withSonarQubeEnv(sonarEnv) {
                             sh "mvn sonar:sonar -e -X -Dsonar.projectKey=jtq_java \
                                     -Dsonar.projectName=jtq_java \
-                                    -Dsonar.sources=${java_dir} \
+                                    -Dsonar.sources=. \
                                     -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
                     }
