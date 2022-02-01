@@ -52,6 +52,7 @@ pipeline {
             }
         }
         */
+        /*
         stage('Build backend') {
             steps {
                 dir(java_dir){
@@ -67,13 +68,13 @@ pipeline {
                 }
             }
         }   
-
+        */
         stage('SonarQube Analysis Back') {
             steps{
                 script{
                     dir(java_dir){
                         withSonarQubeEnv(sonarEnv) {
-                            sh "mvn sonar:sonar -Dsonar.projectKey=jtq_java \
+                            sh "mvn sonar:sonar -e -x -Dsonar.projectKey=jtq_java \
                                     -Dsonar.projectName=jtq_java \
                                     -Dsonar.sources=${java_dir} \
                                     -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
