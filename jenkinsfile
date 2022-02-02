@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         ang_dir = 'angular'
-        java_dir = 'java/jtqj/src'
+        java_dir = 'java/jtqj'
         src_dir = 'src'
 
         sonarEnv = 'sonarqube' 
@@ -77,7 +77,8 @@ pipeline {
                         withSonarQubeEnv(sonarEnv) {
                             sh "mvn sonar:sonar -e -X -Dsonar.projectKey=jtq_java \
                                     -Dsonar.projectName=jtq_java \
-                                    -Dsonar.sources=. \
+                                    -Dsonar.sources=${src_dir} \
+                                    -Dsonar.tests=. \
                                     -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
                     }
