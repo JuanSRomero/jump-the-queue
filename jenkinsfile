@@ -72,6 +72,7 @@ pipeline {
             }
         }   
         */
+        /*
         stage('SonarQube Analysis Back') {
             steps{
                 script{
@@ -82,6 +83,17 @@ pipeline {
                                     -Dsonar.sources=${main_dir} \
                                     -Dsonar.tests=${test_dir} \
                                     -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
+                        }
+                    }
+                }
+            }
+        }*/
+        stage('SonarQube Analysis Back') {
+            steps{
+                script{
+                    dir(java_dir){
+                        withSonarQubeEnv(sonarEnv) {
+                            sh "mvn sonar:sonar -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
                     }
                 }
