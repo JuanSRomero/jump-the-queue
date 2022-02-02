@@ -79,8 +79,8 @@ pipeline {
                         withSonarQubeEnv(sonarEnv) {
                             sh "mvn sonar:sonar -e -X -Dsonar.projectKey=jtq_java \
                                     -Dsonar.projectName=jtq_java \
-                                    -Dsonar.sources=${jtqj_dir} \
-                                    -Dsonar.tests=. \
+                                    -Dsonar.sources=. \
+                                    -Dsonar.tests=${jtqj_dir} \
                                     -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
                     }
