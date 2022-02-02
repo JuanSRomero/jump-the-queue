@@ -5,11 +5,16 @@ pipeline {
         ang_dir = 'angular'
         java_dir = 'java/jtqj'
         src_dir = 'src'
-        main_dir = 'src/main'
-        test_dir = 'src/test'
+        //main_dir = 'src/main'
+        //test_dir = 'src/test'
 
         sonarEnv = 'sonarqube' 
-        sonarTool = 'sonarqube'    
+        sonarTool = 'sonarqube'
+
+        imageName = 'frontend'
+        registryCredentials =  'nexus'
+        registry = '172.18.0.2:8081/'   
+        dockerImage = ''
     }
     tools {
         maven 'mvn'
@@ -88,7 +93,8 @@ pipeline {
                 }
             }
         }*/
-        stage('SonarQube Analysis Back') {
+        /*
+        stage('SonarQube Analysis Back New') {
             steps{
                 script{
                     dir(java_dir){
@@ -99,30 +105,40 @@ pipeline {
                 }
             }
         }
-        stage('Build image frontend') {
-            steps {
+        */
+        stage('Building image') {
+            steps{
                 script {
-                    def frontImage = docker.build("frontend:${env.BUILD_ID}", "-f ${dockerfile} ./java")
-                    frontImage.push()
+                    dir(ang_dir){
+                        dockerImage = docker.build imageName
+                    }
                 }
             }
         }
-        stage('Build image backend') {
-            steps {
+        stage('Uploading to Nexus') {
+            steps{  
                 script {
-                    def backImage = docker.build("backend:${env.BUILD_ID}", "-f ${dockerfile} ./angular")
-                    backIMage.push()
+                    docker.withRegistry( 'http://'+registry, registryCredentials ) {
+                    dockerImage.push('latest')
+                    }
                 }
             }
-        }
-        stage('Build image reverse_proxy') {
+        }    
+        stage('stop previous containers') {
             steps {
-                script {
-                    def reverseImage = docker.build("reverseImage:${env.BUILD_ID}", "-f ${dockerfile} ./nginx")
-                    reverseImage.push()
-                }
+            sh 'docker ps -f name=frontend -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=frontend -q | xargs -r docker container rm'
             }
         }
+        stage('Docker Run') {
+            steps{
+                script {
+                    sh 'docker run -d -p 80:80 --rm --name frontend ' + registry + imageName
+                }
+            }
+        }    
+    }
+    
     }
     
         
