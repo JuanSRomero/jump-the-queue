@@ -4,7 +4,7 @@ pipeline {
     
     environment {
         ang_dir = 'angular'
-        java_dir = 'java'
+        java_dir = 'java/jtqj'
         jtqj_dir = 'jtqj'
         src_dir = 'src'
 
@@ -80,7 +80,7 @@ pipeline {
                             sh "mvn sonar:sonar -e -X -Dsonar.projectKey=jtq_java \
                                     -Dsonar.projectName=jtq_java \
                                     -Dsonar.sources=. \
-                                    -Dsonar.tests=${jtqj_dir} \
+                                    -Dsonar.tests=. \
                                     -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
                     }
