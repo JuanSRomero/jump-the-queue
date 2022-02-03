@@ -11,6 +11,7 @@ pipeline {
 
         sonarEnv = 'sonarqube' 
         sonarTool = 'sonarqube'
+        dockerTool = 'docker'
 
         imageName = 'frontend'
         registryCredentials =  'nexus'
@@ -108,7 +109,7 @@ pipeline {
         }
         */
         stage('Initialize'){
-            def dockerHome = tool 'docker'
+            def dockerHome = tool dockerTool
             env.PATH = "${dockerHome}/bin:${env.PATH}"
         }
         stage('Building image') {
