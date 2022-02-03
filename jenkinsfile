@@ -108,9 +108,13 @@ pipeline {
             }
         }
         */
-        stage('Initialize'){
-            def dockerHome = tool dockerTool
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        stage('Initialize docker'){
+            steps{
+                script {
+                    def dockerHome = tool dockerTool
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
+            }
         }
         stage('Building image') {
             steps{
