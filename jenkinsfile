@@ -120,7 +120,7 @@ pipeline {
             steps{
                 script {
                     dir(ang_dir){
-                        sh 'docker build angular/'
+                        sh 'docker build .'
                     }
                 }
             }
