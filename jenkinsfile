@@ -120,7 +120,7 @@ pipeline {
             steps{
                 script {
                     dir(ang_dir){
-                        dockerImage = docker.build imageName
+                        sh 'docker build -t 'frontend' angular/'
                     }
                 }
             }
