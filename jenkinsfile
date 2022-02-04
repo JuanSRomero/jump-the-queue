@@ -120,7 +120,6 @@ pipeline {
             steps{
                 script {
                     dir(ang_dir){
-                        sh 'sysctl start docker'
                         sh 'docker build .'
                     }
                 }
