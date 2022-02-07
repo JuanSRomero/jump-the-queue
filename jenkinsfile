@@ -125,6 +125,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Uploading to Nexus') {
             steps{  
                 script {
@@ -146,7 +147,8 @@ pipeline {
                     sh 'docker run -d -p 80:80 --rm --name frontend ' + registry + imageName
                 }
             }
-        }    
+        }  
+        */  
     }
     
 }
