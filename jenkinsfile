@@ -116,20 +116,20 @@ pipeline {
                 }
             }
         }
-        stage('Building image angular') {
-            steps{
-                script {
-                    dir(ang_dir){
-                        sh 'docker build -t "frontend" .'
-                    }
-                }
-            }
-        }
         stage('Building image backend') {
             steps{
                 script {
                     dir(java_dir){
                         sh 'docker build -t "backend" .'
+                    }
+                }
+            }
+        }
+        stage('Building image angular') {
+            steps{
+                script {
+                    dir(ang_dir){
+                        sh 'docker build -t "frontend" .'
                     }
                 }
             }
