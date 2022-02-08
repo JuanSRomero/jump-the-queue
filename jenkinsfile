@@ -4,7 +4,8 @@ pipeline {
     
     environment {
         ang_dir = 'angular'
-        java_dir = 'java/jtqj'
+        jtqj_dir = 'java/jtqj'
+        java_dir = 'java'
         src_dir = 'src'
         //main_dir = 'src/main'
         //test_dir = 'src/test'
@@ -65,7 +66,7 @@ pipeline {
         /*
         stage('Build backend') {
             steps {
-                dir(java_dir){
+                dir(jtqj_dir){
                     sh 'mvn clean install -Dmaven.test.skip=true'
                     }
                 }
@@ -73,7 +74,7 @@ pipeline {
         }
         stage('Test backend') {
             steps {
-                dir(java_dir){
+                dir(jtqj_dir){
                     sh 'mvn clean test'
                 }
             }
@@ -83,7 +84,7 @@ pipeline {
         stage('SonarQube Analysis Back') {
             steps{
                 script{
-                    dir(java_dir){
+                    dir(jtqj_dir){
                         withSonarQubeEnv(sonarEnv) {
                             sh "mvn sonar:sonar -e -X -Dsonar.projectKey=jtq_java \
                                     -Dsonar.projectName=jtq_java \
@@ -99,7 +100,7 @@ pipeline {
         stage('SonarQube Analysis Back New') {
             steps{
                 script{
-                    dir(java_dir){
+                    dir(jtqj_dir){
                         withSonarQubeEnv(sonarEnv) {
                             sh "mvn sonar:sonar -Dsonar.dependencyCheck.reportPath=../../dependency-check-report.xml"
                         }
