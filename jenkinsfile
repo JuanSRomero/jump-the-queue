@@ -117,6 +117,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Building image backend') {
             steps{
                 script {
@@ -126,7 +127,8 @@ pipeline {
                 }
             }
         }
-        stage('Uploading to Nexus') {
+
+        stage('Uploading backend to Nexus') {
             steps{  
                 script {
                     sh " docker login -u admin -p admin 127.0.0.1:8082 "
@@ -135,8 +137,8 @@ pipeline {
                     }
                 }
             }
+        */
         
-        /*
         stage('Building image angular') {
             steps{
                 script {
@@ -146,20 +148,14 @@ pipeline {
                 }
             }
         }    
+        /*
         stage('stop previous containers') {
             steps {
             sh 'docker ps -f name=frontend -q | xargs --no-run-if-empty docker container stop'
             sh 'docker container ls -a -fname=frontend -q | xargs -r docker container rm'
             }
-        }
-        stage('Docker Run') {
-            steps{
-                script {
-                    sh 'docker run -d -p 80:80 --rm --name frontend ' + registry + imageName
-                }
-            }
         }  
-        */  
+        */
     }
     
 }
