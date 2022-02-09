@@ -126,21 +126,22 @@ pipeline {
                 }
             }
         }
+        stage('Uploading to Nexus') {
+            steps{  
+                script {
+                    sh " docker login -u admin -p admin 127.0.0.1:8082 "
+                    sh " docker tag backend 127.0.0.1:8082/repository/repo"
+                    sh " docker push 127.0.0.1:8082/repository/repo"
+                    }
+                }
+            }
+        
+        /*
         stage('Building image angular') {
             steps{
                 script {
                     dir(ang_dir){
                         sh 'docker build -t "frontend" .'
-                    }
-                }
-            }
-        }
-        /*
-        stage('Uploading to Nexus') {
-            steps{  
-                script {
-                    docker.withRegistry( 'http://'+registry, registryCredentials ) {
-                    dockerImage.push('latest')
                     }
                 }
             }

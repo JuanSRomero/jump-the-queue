@@ -30,3 +30,29 @@ Fichero de texto para poder realizar commit sin tener que hacer cambios reales e
       #- '/srv/data:/var/opt/gitlab'
     #networks:
       #- net
+
+*******************
+stage('Build image frontend') {
+            steps {
+                script {
+                    def frontImage = docker.build("frontend:${env.BUILD_ID}", "-f ${dockerfile} ./java")
+                    frontImage.push()
+                }
+            }
+        }
+        stage('Build image backend') {
+            steps {
+                script {
+                    def backImage = docker.build("backend:${env.BUILD_ID}", "-f ${dockerfile} ./angular")
+                    backIMage.push()
+                }
+            }
+        }
+        stage('Build image reverse_proxy') {
+            steps {
+                script {
+                    def reverseImage = docker.build("reverseImage:${env.BUILD_ID}", "-f ${dockerfile} ./nginx")
+                    reverseImage.push()
+                }
+            }
+        }
