@@ -8,7 +8,7 @@ COPY package*.json /app
 RUN npm install yarn
 RUN yarn install
 COPY . /app
-RUN yarn build --prod
+RUN npm build --prod
 
 #Stage 2
 
