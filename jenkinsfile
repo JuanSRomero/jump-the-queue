@@ -139,7 +139,7 @@ pipeline {
             }
         
         
-        stage('Building image angular') {
+        stage('Building image frontend') {
             steps{
                 script {
                     dir(ang_dir){
@@ -148,7 +148,7 @@ pipeline {
                 }
             }
         }   
-        stage('Uploading backend to Nexus') {
+        stage('Uploading frontend to Nexus') {
             steps{  
                 script {
                     sh " docker login -u admin -p admin 127.0.0.1:8082 "
