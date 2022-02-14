@@ -117,7 +117,7 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('Building image backend') {
             steps{
                 script {
@@ -137,7 +137,7 @@ pipeline {
                     }
                 }
             }
-        */
+        
         
         stage('Building image angular') {
             steps{
@@ -147,7 +147,16 @@ pipeline {
                     }
                 }
             }
-        }    
+        }   
+        stage('Uploading backend to Nexus') {
+            steps{  
+                script {
+                    sh " docker login -u admin -p admin 127.0.0.1:8082 "
+                    sh " docker tag frontend 127.0.0.1:8082/repository/repo"
+                    sh " docker push 127.0.0.1:8082/repository/repo"
+                    }
+                }
+            } 
         /*
         stage('stop previous containers') {
             steps {
