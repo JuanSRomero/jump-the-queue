@@ -17,7 +17,6 @@ pipeline {
         nexus_username =  credentials('nexus_username')
         nexus_repository = credentials('nexus_repository') 
         nexus_password = credentials('nexus_password')
-        nexus_ip = credentials('nexus_ip')
     }
     tools {
         maven 'mvn'
@@ -131,9 +130,9 @@ pipeline {
         stage('Uploading backend to Nexus') {
             steps{  
                 script {
-                    sh " docker login -u $nexus_username -p $nexus_password $nexus_ip "
-                    sh " docker tag backend $nexus_repository"
-                    sh " docker push $nexus_repository"
+                    sh " docker login -u $nexus_username -p $nexus_password 127.0.0.1:8082 "
+                    sh " docker tag backend 127.0.0.1:8082/repository/repo"
+                    sh " docker push 127.0.0.1:8082/repository/repo"
                     }
                 }
             }
@@ -151,9 +150,9 @@ pipeline {
         stage('Uploading frontend to Nexus') {
             steps{  
                 script {
-                    sh " docker login -u $nexus_username -p $nexus_password $nexus_ip "
-                    sh " docker tag frontend $nexus_repository"
-                    sh " docker push $nexus_repository"
+                    sh " docker login -u $nexus_username -p $nexus_password 127.0.0.1:8082 "
+                    sh " docker tag frontend 127.0.0.1:8082/repository/repo"
+                    sh " docker push 127.0.0.1:8082/repository/repo"
                     }
                 }
             } 
