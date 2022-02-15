@@ -14,10 +14,10 @@ pipeline {
         sonarTool = 'sonarqube'
         dockerTool = 'docker'
 
-        imageFront = 'frontend'
-        registryCredentials =  'nexus'
-        registry = '172.08.0.3:8082/repository/repo'   
-        dockerImage = ''
+        nexus_username =  credentials('nexus_username')
+        nexus_repository = credentials('nexus_repository') 
+        nexus_password = credentials('nexus_password')
+        nexus_ip = credentials('nexus_ip')
     }
     tools {
         maven 'mvn'
@@ -131,9 +131,9 @@ pipeline {
         stage('Uploading backend to Nexus') {
             steps{  
                 script {
-                    sh " docker login -u admin -p admin 127.0.0.1:8082 "
-                    sh " docker tag backend 127.0.0.1:8082/repository/repo"
-                    sh " docker push 127.0.0.1:8082/repository/repo"
+                    sh " docker login -u $nexus_username -p $nexus_password $nexus_ip "
+                    sh " docker tag backend $nexus_repository"
+                    sh " docker push $nexus_repository"
                     }
                 }
             }
@@ -151,9 +151,9 @@ pipeline {
         stage('Uploading frontend to Nexus') {
             steps{  
                 script {
-                    sh " docker login -u admin -p admin 127.0.0.1:8082 "
-                    sh " docker tag frontend 127.0.0.1:8082/repository/repo"
-                    sh " docker push 127.0.0.1:8082/repository/repo"
+                    sh " docker login -u $nexus_username -p $nexus_password $nexus_ip "
+                    sh " docker tag frontend $nexus_repository"
+                    sh " docker push $nexus_repository"
                     }
                 }
             } 
