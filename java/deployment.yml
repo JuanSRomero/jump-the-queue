@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  labels:
+    app: angular-webapp
+  name: angular-webapp
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels: 
+        app: backend-webapp
+    spec: 
+      containers:
+      - name: backend
+        image: docker.io/juanromero01/jump_the_queue:backend 
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+        - containerPort: 8080 
+    status: {}
