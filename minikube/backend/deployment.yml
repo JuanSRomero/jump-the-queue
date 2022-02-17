@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend #depende del pod, ojo
+  name: backend #nombre del deployment
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend #depende pod
+  strategy: {}
+  template:
+    metadata:
+      labels: 
+      #nombre del pod
+        app: backend
+    spec: 
+      containers:
+      - name: backend
+        image: docker.io/juanromero01/jump_the_queue:backend 
+        imagePullPolicy: 'IfNotPresent'
+        resources: {}
+        ports:
+        - containerPort: 80 
+    

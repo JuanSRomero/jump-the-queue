@@ -1,0 +1,119 @@
+#deployment frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: {}
+  template:
+    metadata:
+      labels: 
+        app: frontend
+    spec: 
+      containers:
+      - name: frontend
+        image: docker.io/juanromero01/jump_the_queue:frontend
+        imagePullPolicy: 'IfNotPresent'
+        resources: {}
+        ports:
+        - containerPort: 80 
+
+---
+
+#service frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  type: NodePort
+
+---
+
+#deployment backend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend #depende del pod, ojo
+  name: backend #nombre del deployment
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend #depende pod
+  strategy: {}
+  template:
+    metadata:
+      labels: 
+      #nombre del pod
+        app: backend
+    spec: 
+      containers:
+      - name: backend
+        image: docker.io/juanromero01/jump_the_queue:backend 
+        imagePullPolicy: 'IfNotPresent'
+        resources: {}
+        ports:
+        - containerPort: 8081
+
+--- 
+
+#service backend
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 8081
+  type: NodePort
+
+--- 
+
+#ingress 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+        - path: "/"
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80
+        - path: "/api"
+          backend:
+            service:
+              name: backend
+              port:
+                number: 8081
+          pathType: Prefix
+
+
+
+    

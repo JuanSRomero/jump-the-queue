@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: {}
+  template:
+    metadata:
+      labels: 
+        app: frontend
+    spec: 
+      containers:
+      - name: frontend
+        image: docker.io/juanromero01/jump_the_queue:frontend
+        imagePullPolicy: 'IfNotPresent'
+        resources: {}
+        ports:
+        - containerPort: 8080 
+
+    
