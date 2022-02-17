@@ -58,8 +58,7 @@ spec:
   template:
     metadata:
       labels: 
-      #nombre del pod
-        app: backend
+        app: backend #nombre del pod
     spec: 
       containers:
       - name: backend
@@ -96,7 +95,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: localhost
+    - host: kubernetes.docker.internal #docker desktop añade a la lista de hosts esto como 127.0.0.1
       http:
         paths:
         - path: "/"
