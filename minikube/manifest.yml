@@ -18,8 +18,9 @@ spec:
     spec: 
       containers:
       - name: frontend
-        image: docker.io/juanromero01/jump_the_queue:frontend
-        imagePullPolicy: 'IfNotPresent'
+        #image: docker.io/juanromero01/jump_the_queue:frontend #esta es la version con la build de api
+        image: docker.io/juanromero01/jump_the_queue:frontend_v2 #version con build de jump the queue
+        imagePullPolicy: 'Always' #esto es para asegurarme de que pullea y no usa una que tenga ya
         resources: {}
         ports:
         - containerPort: 80 
