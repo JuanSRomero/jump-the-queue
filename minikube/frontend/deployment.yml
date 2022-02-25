@@ -18,7 +18,7 @@ spec:
       containers:
       - name: frontend
         image: docker.io/juanromero01/jump_the_queue:frontend
-        imagePullPolicy: 'IfNotPresent'
+        imagePullPolicy: 'Always'
         resources: {}
         ports:
         - containerPort: 8080 

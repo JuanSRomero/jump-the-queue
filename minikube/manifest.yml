@@ -19,7 +19,9 @@ spec:
       containers:
       - name: frontend
         #image: docker.io/juanromero01/jump_the_queue:frontend #esta es la version con la build de api
-        image: docker.io/juanromero01/jump_the_queue:frontend_v2 #version con build de jump the queue
+        image: docker.io/juanromero01/jump_the_queue:frontend_v2 #version con build de local/jump the queue#
+        #image: docker.io/juanromero01/jump_the_queue:frontend_v3 #version con build de /jumpthequeue
+        #image: 127.0.0.1:8082/repository/repo
         imagePullPolicy: 'Always' #esto es para asegurarme de que pullea y no usa una que tenga ya
         resources: {}
         ports:
@@ -64,7 +66,8 @@ spec:
       containers:
       - name: backend
         image: docker.io/juanromero01/jump_the_queue:backend 
-        imagePullPolicy: 'IfNotPresent'
+        #image: 127.0.0.1:8083/repository/minikube
+        imagePullPolicy: 'Always'
         resources: {}
         ports:
         - containerPort: 8081
@@ -106,7 +109,7 @@ spec:
               name: frontend
               port:
                 number: 80
-        - path: "/api"
+        - path: "/jumpthequeue"
           backend:
             service:
               name: backend
