@@ -3,13 +3,15 @@ version: "3.9"
 services: 
   front:
     container_name: frontend
-    image: jtqfront
+    image: jtqfrontend
     build: angular/
+    ports: 
+      - "80:80"
     networks: 
       - local_test
   back:
     container_name: backend
-    image: jtqnuevo
+    image: jtqbackend
     build: java/
     networks: 
       - local_test
@@ -18,12 +20,12 @@ services:
     image: reverseproxy
     build: nginx/
     ports:
-      - 80:80
+     - 80:80
     links: 
-      - front
-      - back
+     - front
+     - back
     networks: 
-      - local_test
+     - local_test
 #docker-compose usa una network default, pero mejor hacerla
 networks:
   local_test: 

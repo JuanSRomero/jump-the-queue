@@ -5,6 +5,6 @@ export const environment: {
 } = {
   production: true,
   //detectara en el reverse proxy 
-  baseUrlRestServices: 'http://localhost:80/api',
+  baseUrlRestServices: '/jumpthequeue/services/rest',
   security: 'csrf'
 };

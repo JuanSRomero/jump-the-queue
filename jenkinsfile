@@ -3,20 +3,22 @@ pipeline {
  
     
     environment {
+        //Paths
         ang_dir = 'angular'
         jtqj_dir = 'java/jtqj'
         java_dir = 'java'
         src_dir = 'src'
-        //main_dir = 'src/main'
-        //test_dir = 'src/test'
 
+        //Tools of jenkins
         sonarEnv = 'sonarqube' 
         sonarTool = 'sonarqube'
         dockerTool = 'docker'
 
+        //Credentials inside of jenkins
         nexus_username =  credentials('nexus_username')
         nexus_repository = credentials('nexus_repository') 
         nexus_password = credentials('nexus_password')
+        nexus_ip = credentials('nexus_ip')
     }
     tools {
         maven 'mvn'
@@ -28,11 +30,18 @@ pipeline {
             steps {
                 dir(ang_dir){
                     //sh 'yarn --network-timeout 100000'
+                    //sh 'yarn install'
                     sh 'npm install'
                 }
             }
         }
-        /*
+        stage('Build frontend') {
+            steps {
+                dir(ang_dir){
+                    sh 'npm run build'
+                }
+            }
+        }
         stage('SonarQube Analysis Front') {
             steps {
                 script {
@@ -52,17 +61,7 @@ pipeline {
                 }
             }
         }
-        */
-        /*
-        stage('Build frontend') {
-            steps {
-                dir(ang_dir){
-                    sh 'npm run build'
-                }
-            }
-        }
-        */
-        /*
+          
         stage('Build backend') {
             steps {
                 dir(jtqj_dir){
@@ -78,7 +77,7 @@ pipeline {
                 }
             }
         }   
-        */
+        
         /*
         stage('SonarQube Analysis Back') {
             steps{
@@ -94,8 +93,8 @@ pipeline {
                     }
                 }
             }
-        }*/
-        /*
+        }
+        */
         stage('SonarQube Analysis Back New') {
             steps{
                 script{
@@ -107,7 +106,7 @@ pipeline {
                 }
             }
         }
-        */
+        /*
         stage('Initialize docker'){
             steps{
                 script {
@@ -116,7 +115,7 @@ pipeline {
                 }
             }
         }
-        
+        */
         stage('Building image backend') {
             steps{
                 script {
@@ -131,7 +130,7 @@ pipeline {
             steps{  
                 script {
                     sh " docker login -u $nexus_username -p $nexus_password 127.0.0.1:8082 "
-                    sh " docker tag backend 127.0.0.1:8082/repository/repo"
+                    sh " docker tag backend 127.0.0.1:8082/repository/repo:backend"
                     sh " docker push 127.0.0.1:8082/repository/repo"
                     }
                 }
@@ -151,19 +150,19 @@ pipeline {
             steps{  
                 script {
                     sh " docker login -u $nexus_username -p $nexus_password 127.0.0.1:8082 "
-                    sh " docker tag frontend 127.0.0.1:8082/repository/repo"
+                    sh " docker tag frontend 127.0.0.1:8082/repository/repo:frontend"
                     sh " docker push 127.0.0.1:8082/repository/repo"
                     }
                 }
             } 
-        /*
-        stage('stop previous containers') {
-            steps {
-            sh 'docker ps -f name=frontend -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=frontend -q | xargs -r docker container rm'
-            }
-        }  
-        */
+        // Trabajo en progreso
+        // stage('stop previous containers') {
+        //     steps {
+        //     sh 'docker ps -f name=frontend -q | xargs --no-run-if-empty docker container stop'
+        //     sh 'docker container ls -a -fname=frontend -q | xargs -r docker container rm'
+        //     }
+        // }  
+        
     }
     
 }

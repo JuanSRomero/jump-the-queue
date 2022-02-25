@@ -4,6 +4,6 @@ export const environment: {
   //security: 'jwt' | 'csrf';
 } = {
   production: false,
-  baseUrlRestServices: 'http://localhost:80/api',
+  baseUrlRestServices: '/jumpthequeue/services/rest',
   //security: 'csrf'
 };
